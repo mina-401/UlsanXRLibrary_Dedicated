@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{6B18DDA9-47B3-FC27-20FE-08BA84FC1FC1}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "UlsanXRLibrary",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
