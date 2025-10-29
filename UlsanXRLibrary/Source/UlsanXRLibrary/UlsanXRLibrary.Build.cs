@@ -4,20 +4,24 @@ using UnrealBuildTool;
 
 public class UlsanXRLibrary : ModuleRules
 {
-	public UlsanXRLibrary(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+    public UlsanXRLibrary(ReadOnlyTargetRules Target) : base(Target)
+    {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+        PublicIncludePaths.AddRange(
+              new string[] {
+        ModuleDirectory,  // 기존 모듈 디렉터리 포함
+        System.IO.Path.Combine(ModuleDirectory, "Global") // Global 폴더 추가
+              }
+          );
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+        PublicDependencyModuleNames.AddRange(new string[] {
+            "Core", "CoreUObject", "Engine",
+            "InputCore", "EnhancedInput",
+            "UMG",
+            "Sockets", "Networking","OnlineSubsystem","OnlineSubsystemNull","OnlineSubsystemUtils"
+        });
 
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-	}
+
+    }
 }
