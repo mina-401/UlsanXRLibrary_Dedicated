@@ -4,22 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Global/BaseGameMode.h"
-
-#include "LobbyGameMode.generated.h"
+#include "PlayGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ULSANXRLIBRARY_API ALobbyGameMode : public ABaseGameMode
+class ULSANXRLIBRARY_API APlayGameMode : public ABaseGameMode
 {
 	GENERATED_BODY()
-
-public:
-	ALobbyGameMode();
 	
-	~ALobbyGameMode() {}
-
-	UFUNCTION()
-	void StartLobbySession();
+	
+	
+	
 };

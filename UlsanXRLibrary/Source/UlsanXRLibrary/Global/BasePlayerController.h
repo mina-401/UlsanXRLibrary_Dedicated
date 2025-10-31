@@ -25,6 +25,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void SetupInputComponentEvent();
+
+
+	UFUNCTION()
+	FString GetPlayerIP() const;
 protected:
 
 

@@ -6,5 +6,13 @@
 void ABaseGameMode::PostLogin(APlayerController* NewPlayer)
 {
     Super::PostLogin(NewPlayer);
-    RestartPlayer(NewPlayer);
+
+    FTimerHandle H;
+    GetWorld()->GetTimerManager().SetTimer(H, FTimerDelegate::CreateLambda([this, NewPlayer]()
+    {
+        // 기존 스폰/포제션 로직 실행
+        RestartPlayer(NewPlayer);
+    }), 0.15f, false);
+
+    
 }

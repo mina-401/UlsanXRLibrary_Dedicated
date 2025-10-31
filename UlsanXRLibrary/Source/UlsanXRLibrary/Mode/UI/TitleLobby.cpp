@@ -10,7 +10,7 @@ void UTitleLobby::OpenServer()
     if (UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance()))
     {
         // 필요 시 인원 수를 UI에서 받아와 전달하세요.
-        BaseGI->HostLobby(10);
+        BaseGI->HostLobby(10,"LobbyLevel");
     }
     else
     {

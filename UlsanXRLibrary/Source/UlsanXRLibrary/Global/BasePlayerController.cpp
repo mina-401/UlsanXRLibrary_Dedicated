@@ -4,9 +4,17 @@
 #include "Global/BasePlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include <SocketSubsystem.h>
 
 ABasePlayerController::ABasePlayerController()
 {
+}
+FString ABasePlayerController::GetPlayerIP() const
+{
+	bool bIsLocalHost = false;
+	TSharedRef<FInternetAddr> LocalAddr = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->GetLocalHostAddr(*GLog, bIsLocalHost);
+	return LocalAddr->ToString(false); // false = 포트 제외
+
 }
 
 void ABasePlayerController::AddMappingContext(UInputMappingContext* _MappingContext)
