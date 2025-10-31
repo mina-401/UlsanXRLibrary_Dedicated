@@ -22,7 +22,7 @@ void UTitleLobby::OnCreateLobbyClicked()
             TimerHandle,
             FTimerDelegate::CreateLambda([GI]()
         {
-            GI->JoinLobby(TEXT("LobbyLevel"));
+            GI->JoinLobbySession();
         }),
             5.0f, // 필요 시 조정
             false
@@ -36,6 +36,6 @@ void UTitleLobby::OnJoinLobbyClicked()
     UBaseGameInstance* GI = Cast<UBaseGameInstance>(UGameplayStatics::GetGameInstance(this));
     if (GI)
     {
-        GI->JoinLobby(TEXT("LobbyLevel"));
+        GI->JoinLobbySession();
     }
 }

@@ -17,9 +17,9 @@ class ULSANXRLIBRARY_API UPlayTestBook : public UTitleUserWidget
 public:
 
 	UFUNCTION(BlueprintCallable)
-	void OnCreateGameClicked();
+	void OnCreateLobbyClicked();
 	UFUNCTION(BlueprintCallable)
-	void OnJoinGameClicked();
+	void OnJoinLobbyClicked();
 	
 	
 };

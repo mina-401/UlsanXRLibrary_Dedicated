@@ -18,7 +18,7 @@ class ULSANXRLIBRARY_API APlayPlayerController : public ABasePlayerController
 public:
 	// ¼­¹ö RPC
 	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
-	void ReturnTravel();
+	void RequestStartBookTravel();
 
 	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
 	void JoinLobby();
@@ -28,7 +28,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OnClickJoinLobby();
-
 	
 	//void Server_RequestStartBookTravel_Implementation();
 	

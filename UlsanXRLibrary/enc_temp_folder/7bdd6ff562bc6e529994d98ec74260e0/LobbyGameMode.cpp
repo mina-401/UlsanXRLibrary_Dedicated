@@ -51,9 +51,5 @@ void ALobbyGameMode::StartLobbySession()
 
     UE_LOG(LogTemp, Log, TEXT("[LobbyGM] Calling HostLobby()"));
     bLobbySessionStarted = true;
-    GI->HostLobby(TEXT("LobbyLevel"));
+    GI->HostLobby();
 }
-
-
-
-

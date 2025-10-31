@@ -41,7 +41,7 @@ void UBaseGameInstance::Init()
     }
 }
 
-void UBaseGameInstance::HostLobby(const FString& SessionType)
+void UBaseGameInstance::HostLobby()
 {
     if (!SessionInterface.IsValid()) return;
 
@@ -50,13 +50,12 @@ void UBaseGameInstance::HostLobby(const FString& SessionType)
     Settings.NumPublicConnections = 4;
     Settings.bShouldAdvertise = true;
     Settings.bUsesPresence = true;
-    Settings.Set(FName("SessionType"), SessionType, EOnlineDataAdvertisementType::ViaOnlineService);
+    Settings.Set(FName("SessionType"), FString("LobbySession"), EOnlineDataAdvertisementType::ViaOnlineService);
 
 
-    const FName LocalSessionName(*SessionType);
-    SESS_LOG(Log, "CreateSession name=%s", *LocalSessionName.ToString());
+  //  SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UBaseGameInstance::OnCreateSessionComplete);
 
-    SessionInterface->CreateSession(0, LocalSessionName, Settings);
+    SessionInterface->CreateSession(0, FName("LobbySession"), Settings);
 }
 
 
@@ -68,7 +67,18 @@ void UBaseGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSucc
     }
 }
 
-void UBaseGameInstance::JoinLobby(const FString& SessionType)
+void UBaseGameInstance::JoinLobby()
+{
+    if (!SessionInterface.IsValid()) return;
+
+    SessionSearch = MakeShared<FOnlineSessionSearch>();
+    SessionSearch->bIsLanQuery = true;
+    SessionSearch->MaxSearchResults = 10;
+
+   // SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UBaseGameInstance::OnFindSessionsComplete);
+    SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
+}
+void UBaseGameInstance::JoinLobbySession()
 {
     IOnlineSubsystem* OSS = IOnlineSubsystem::Get();
     if (!OSS) return;
@@ -76,16 +86,12 @@ void UBaseGameInstance::JoinLobby(const FString& SessionType)
     SessionInterface = OSS->GetSessionInterface();
     if (!SessionInterface.IsValid()) return;
 
-    WantedSessionType.Empty();
-
-    WantedSessionType = SessionType; // 콜백에서 사용할 필터 저장
-
     SessionSearch = MakeShareable(new FOnlineSessionSearch());
     SessionSearch->bIsLanQuery = true;
     SessionSearch->MaxSearchResults = 10;
     SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 
-    SESS_LOG(Log, "FindSessions start. WantedType=%s", *WantedSessionType);
+    //SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UBaseGameInstance::OnFindSessionsComplete);
     SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
 }
 
@@ -93,24 +99,13 @@ void UBaseGameInstance::OnFindSessionsComplete(bool bWasSuccessful)
 {
     if (!bWasSuccessful || !SessionSearch.IsValid()) return;
 
-    const FString WantedType = WantedSessionType.IsEmpty() ? TEXT("LobbySession") : WantedSessionType;
-
     for (const FOnlineSessionSearchResult& Result : SessionSearch->SearchResults)
     {
-        FString FoundType;
-        Result.Session.SessionSettings.Get(FName("SessionType"), FoundType);
-
-        if (FoundType == WantedType)
+        FString FoundName;
+        if (Result.Session.SessionSettings.Get(FName("SessionType"), FoundName) && FoundName == "LobbySession")
         {
-            // 로컬 세션 이름은 WantedType로 사용(또는 NAME_GameSession로 고정해도 무방)
-            const FName LocalSessionName(*WantedType);
-            SESS_LOG(Log, "JoinSession -> LocalName=%s", *LocalSessionName.ToString());
-
-            SessionInterface->JoinSession(0, LocalSessionName, Result);
-
-            WantedSessionType.Empty();
-
-            return;
+            SessionInterface->JoinSession(0, FName("LobbySession"), Result);
+            break;
         }
     }
 }

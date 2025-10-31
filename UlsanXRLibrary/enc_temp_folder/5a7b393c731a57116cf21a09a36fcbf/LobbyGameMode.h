@@ -28,7 +28,4 @@ private:
 	UFUNCTION()
 	void StartLobbySession();
 	bool bLobbySessionStarted = false;
-
-private:
-	FProcHandle ExternalServerHandle;
 };

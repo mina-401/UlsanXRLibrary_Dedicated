@@ -7,7 +7,6 @@
 #include "OnlineSubsystem.h"
 #include "Online/OnlineSessionNames.h"
 #include "Interfaces/OnlineSessionInterface.h"
-#include "LobbyGameMode.h"
 
 
 
@@ -22,19 +21,15 @@
 //	}
 //}
 
-void APlayPlayerController::ReturnTravel()
+void APlayPlayerController::RequestStartBookTravel()
 {
 	UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance());
 
 	if (BaseGI)
 	{
-        BaseGI->JoinLobby(TEXT("LobbyLevel"));
+		//BaseGI->StartBookTravel(this);
 	}
 }
-
-
-
-
 void APlayPlayerController::JoinLobby()
 {
     //IOnlineSubsystem* OSS = IOnlineSubsystem::Get();
@@ -55,7 +50,7 @@ void APlayPlayerController::OnClickHostLobby()
     UBaseGameInstance* GI = Cast<UBaseGameInstance>(GetGameInstance());
     if (GI)
     {
-        GI->HostLobby(TEXT("Lobby"));
+        GI->HostLobby();
     }
 }
 
@@ -64,6 +59,6 @@ void APlayPlayerController::OnClickJoinLobby()
     UBaseGameInstance* GI = Cast<UBaseGameInstance>(GetGameInstance());
     if (GI)
     {
-        GI->JoinLobby(TEXT("Lobby"));
+        GI->JoinLobby();
     }
 }

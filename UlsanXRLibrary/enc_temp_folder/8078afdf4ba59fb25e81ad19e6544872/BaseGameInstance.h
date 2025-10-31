@@ -23,12 +23,12 @@ public:
 public:
 	UBaseGameInstance();
 
+	// 클라이언트/서버 공통 초기화(델리게이트 바인딩)
 	virtual void Init() override;
 
-	void HostLobby(const FString& SessionType);
-	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
-	void JoinLobby(const FString& SessionType);
+	void HostLobby();
 
+	
 
 	// 월드 시작 시(서버에서 세션 생성 트리거로 사용)
 	//virtual void OnStart() override;
@@ -87,8 +87,6 @@ protected:
 
 	FOnJoinSessionCompleteDelegate OnJoinSessionCompleteDelegate;
 	FDelegateHandle OnJoinSessionCompleteDelegateHandle;
-
-	FString WantedSessionType;
 
 	// 전용 서버에서 중복 생성 방지
 	bool bDedicatedSessionCreated = false;
@@ -158,5 +156,8 @@ private:
 	}*/
 
 
-
+public:
+		UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
+		void JoinLobby();
+		void JoinLobbySession();
 };
