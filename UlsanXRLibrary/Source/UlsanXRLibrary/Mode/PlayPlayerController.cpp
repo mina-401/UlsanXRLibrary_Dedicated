@@ -27,7 +27,7 @@ void APlayPlayerController::RequestStartBookTravel()
 
 	if (BaseGI)
 	{
-		BaseGI->StartBookTravel(this);
+		//BaseGI->StartBookTravel(this);
 	}
 }
 void APlayPlayerController::JoinLobby()
@@ -44,4 +44,21 @@ void APlayPlayerController::JoinLobby()
 
     //SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &APlayPlayerController::OnFindSessionsComplete);
     //SessionInterface->FindSessions(0, SearchSettings.ToSharedRef());
+}
+void APlayPlayerController::OnClickHostLobby()
+{
+    UBaseGameInstance* GI = Cast<UBaseGameInstance>(GetGameInstance());
+    if (GI)
+    {
+        GI->HostLobby();
+    }
+}
+
+void APlayPlayerController::OnClickJoinLobby()
+{
+    UBaseGameInstance* GI = Cast<UBaseGameInstance>(GetGameInstance());
+    if (GI)
+    {
+        GI->JoinLobby();
+    }
 }

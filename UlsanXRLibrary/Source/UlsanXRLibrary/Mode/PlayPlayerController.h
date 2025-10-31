@@ -23,7 +23,11 @@ public:
 	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
 	void JoinLobby();
 
+	UFUNCTION(BlueprintCallable)
+	void OnClickHostLobby();
 
+	UFUNCTION(BlueprintCallable)
+	void OnClickJoinLobby();
 	
 	//void Server_RequestStartBookTravel_Implementation();
 	

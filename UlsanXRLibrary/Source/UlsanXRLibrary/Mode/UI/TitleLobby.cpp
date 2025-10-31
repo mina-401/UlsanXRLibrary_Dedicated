@@ -2,31 +2,40 @@
 
 
 #include "Mode/UI/TitleLobby.h"
+#include <Kismet/GameplayStatics.h>
+#include <Mode/PlayPlayerController.h>
 
-void UTitleLobby::OpenServer()
+void UTitleLobby::OnCreateLobbyClicked()
 {
-    
+    // LobbyServer.exe 실행
+    FString LobbyServerPath = FPaths::ProjectDir() / TEXT("Binaries/Win64/UlsanXRLibraryServer.exe");
 
-    if (UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance()))
+    // ?listen 옵션 없이 단순 서버 실행
+    FString CommandLine = TEXT("/Game/Level/LobbyLevel -server -log");
+
+    FPlatformProcess::CreateProc(*LobbyServerPath, *CommandLine, true, false, false, nullptr, 0, nullptr, nullptr);
+
+    if (UBaseGameInstance* GI = Cast<UBaseGameInstance>(UGameplayStatics::GetGameInstance(this)))
     {
-        // 필요 시 인원 수를 UI에서 받아와 전달하세요.
-        BaseGI->HostLobby(10,"LobbyLevel");
+        FTimerHandle TimerHandle;
+        GetWorld()->GetTimerManager().SetTimer(
+            TimerHandle,
+            FTimerDelegate::CreateLambda([GI]()
+        {
+            GI->JoinLobbySession();
+        }),
+            5.0f, // 필요 시 조정
+            false
+        );
     }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("OpenServer: GameInstance is not UBaseGameInstance"));
-    }
+
 }
 
-void UTitleLobby::JoinServer()
+void UTitleLobby::OnJoinLobbyClicked()
 {
-    if (UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance()))
+    UBaseGameInstance* GI = Cast<UBaseGameInstance>(UGameplayStatics::GetGameInstance(this));
+    if (GI)
     {
-        // 필요 시 인원 수를 UI에서 받아와 전달하세요.
-        BaseGI->FindLobbies();
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("JoinServer: GameInstance is not UBaseGameInstance"));
+        GI->JoinLobbySession();
     }
 }

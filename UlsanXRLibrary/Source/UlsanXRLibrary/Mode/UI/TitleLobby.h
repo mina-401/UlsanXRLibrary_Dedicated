@@ -13,11 +13,18 @@ UCLASS()
 class ULSANXRLIBRARY_API UTitleLobby : public UTitleUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
-	UFUNCTION(BlueprintCallable)
-	void OpenServer();
+	//UFUNCTION(BlueprintCallable)
+	//void OpenServer();
 	
+	//UFUNCTION(BlueprintCallable)
+	//void JoinServer();
+
 	UFUNCTION(BlueprintCallable)
-	void JoinServer();
+	void OnCreateLobbyClicked();
+	UFUNCTION(BlueprintCallable)
+	void OnJoinLobbyClicked();
+	//UFUNCTION(BlueprintCallable)
+	//void TryJoinLobbySession();
 };

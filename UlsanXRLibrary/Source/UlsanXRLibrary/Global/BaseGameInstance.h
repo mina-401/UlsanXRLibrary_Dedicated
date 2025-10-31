@@ -26,42 +26,44 @@ public:
 	// 클라이언트/서버 공통 초기화(델리게이트 바인딩)
 	virtual void Init() override;
 
+	void HostLobby();
+
 	
 
 	// 월드 시작 시(서버에서 세션 생성 트리거로 사용)
-	virtual void OnStart() override;
+	//virtual void OnStart() override;
 
 	// 클라이언트: 전용 서버 실행(세션 생성 X)
-	UFUNCTION(BlueprintCallable, Category="Session")
-	void HostLobby(int NumPlayers = 6, FString MapName="TitleLevel");
-
-	// 클라이언트: 서버 세션 검색/참가
-	UFUNCTION(BlueprintCallable, Category="Session")
-	void FindLobbies();
-
-	UFUNCTION(BlueprintCallable, Category="Session")
-	void JoinLobby(int SearchIndex);
-
+//	UFUNCTION(BlueprintCallable, Category="Session")
+//	void HostLobby(int NumPlayers = 6, FString MapName="TitleLevel");
+//
+//	// 클라이언트: 서버 세션 검색/참가
+//	UFUNCTION(BlueprintCallable, Category="Session")
+//	void FindLobbies();
+//
+//	UFUNCTION(BlueprintCallable, Category="Session")
+//	void JoinLobby(int SearchIndex);
+//
 	// 기존
 	void StartServer(FString& _IP, FString& _Port);
 	void Connect(const FString& _IP, const FString& _Port);
-
-	
-
-	//로비서버 생성
-	void StartLobbyServer(const FString MapName);
-
-	// 서버 콘솔에서 호출 가능한 Exec 명령: 지연 후 세션 생성
-	UFUNCTION(Exec)
-	void AutoCreateSession(int32 MaxPlayers = 6, FString MapName = TEXT("TitleLevel"), float DelaySeconds = 1.0f);
-	UFUNCTION()
-	void HandleAutoCreateAfterLoad(UWorld* LoadedWorld);
-	FString MakeSessionNameFromMap(const FString& MapName);
-protected:
-	// 전용 서버에서 세션을 생성/광고
-	void CreateServerSession(int32 NumPublicConnections = 6,FString MapName=TEXT("TitleLevel"));
-
-	void CreateAutoLanSession(int32 NumPublicConnections, const FString MapName);
+//
+//	
+//
+//	//로비서버 생성
+//	void StartLobbyServer(const FString MapName);
+//
+//	// 서버 콘솔에서 호출 가능한 Exec 명령: 지연 후 세션 생성
+//	UFUNCTION(Exec)
+//	void AutoCreateSession(int32 MaxPlayers = 6, FString MapName = TEXT("TitleLevel"), float DelaySeconds = 1.0f);
+//	UFUNCTION()
+//	void HandleAutoCreateAfterLoad(UWorld* LoadedWorld);
+//	FString MakeSessionNameFromMap(const FString& MapName);
+//protected:
+//	// 전용 서버에서 세션을 생성/광고
+//	void CreateServerSession(int32 NumPublicConnections = 6,FString MapName=TEXT("TitleLevel"));
+//
+//	void CreateAutoLanSession(int32 NumPublicConnections, const FString MapName);
 
 	// 세션 콜백
 	void OnCreateSessionComplete(FName SessionName, bool bSucceeded);
@@ -99,8 +101,8 @@ protected:
 public:
 	// 요청한 플레이어만 플레이 서버로 이동시키기
 
-	UFUNCTION(BlueprintCallable, Category = "Server")
-	void StartBookTravel(APlayerController* RequesterPC, int32 ServerPort= 30010);
+	//UFUNCTION(BlueprintCallable, Category = "Server")
+	//void StartBookTravel(APlayerController* RequesterPC, int32 ServerPort= 30010);
 
 
 protected:
@@ -124,8 +126,7 @@ protected:
 
 
 public:
-	UFUNCTION(BlueprintCallable)
-	FString GetPlayWorldLevel();
+
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Data")
@@ -153,4 +154,10 @@ private:
 	{
 		return Port;
 	}*/
+
+
+public:
+		UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
+		void JoinLobby();
+		void JoinLobbySession();
 };

@@ -15,6 +15,8 @@ class ULSANXRLIBRARY_API ALobbyGameMode : public ABaseGameMode
 {
 	GENERATED_BODY()
 
+protected:
+	virtual void BeginPlay() override;
 public:
 	ALobbyGameMode();
 	

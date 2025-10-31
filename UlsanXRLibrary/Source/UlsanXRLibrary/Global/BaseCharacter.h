@@ -45,28 +45,7 @@ public:
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
-	UFUNCTION(BlueprintCallable, Reliable, Server)
-	void ChangeAnimation(EPlayerAnimation _CurAnimnation, FName _SectionName = TEXT("None"));
-	void ChangeAnimation_Implementation(EPlayerAnimation _CurAnimnation, FName _SectionName = TEXT("None"));
 
-	UFUNCTION(BlueprintCallable, Reliable, NetMulticast)
-	void ChangeAnimation_Multi(EPlayerAnimation _CurAnimnation, FName _SectionName = TEXT("None"));
-	void ChangeAnimation_Multi_Implementation(EPlayerAnimation _CurAnimnation, FName _SectionName = TEXT("None"));
-
-	UFUNCTION(BlueprintCallable)
-	void ChangeRoomState(EPlayerRoom _Room)
-	{
-		CurRoom = _Room;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	void SetPlayerStateByRoom(EPlayerRoom _Room);
-
-	UFUNCTION()
-	void OnRep_CurRoom();
-
-	UFUNCTION()
-	void ChangePlayerByRoom();
 protected:
 	//Input 
     void Move(const struct FInputActionValue& Value);
@@ -104,7 +83,5 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Play", meta = (AllowPrivateAccess = "true"))
 	float CurSpeed = 0.0f;
 
-	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CurRoom, BlueprintReadOnly, Category = "Play", meta = (AllowPrivateAccess = "true"))
-	EPlayerRoom CurRoom = EPlayerRoom::MAX;
 
 };
