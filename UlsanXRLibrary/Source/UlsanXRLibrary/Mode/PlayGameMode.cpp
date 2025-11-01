@@ -27,9 +27,10 @@ void APlayGameMode::BeginPlay()
         GetWorld()->GetTimerManager().SetTimer(
             EmptyCheckTimerHandle,
             this,
-            &APlayGameMode::CheckEmptyAndMaybeShutdown,
+            &APlayGameMode::ShutdownServer,
             EmptyCheckInterval,
-            true
+            true,
+            20.0f
         );
 
         UE_LOG(LogTemp, Log, TEXT("[PlayGM] Started empty-check timer (interval=%.2f)"), EmptyCheckInterval);
@@ -68,11 +69,7 @@ void APlayGameMode::Logout(AController* Exiting)
 {
     Super::Logout(Exiting);
 
-    int32 CurrentPlayers = 0;
-    if (AGameState* GS = GetGameState<AGameState>())
-    {
-        CurrentPlayers = GS->PlayerArray.Num();
-    }
+    int32 CurrentPlayers = GetNumPlayers();
 
     UE_LOG(LogTemp, Warning, TEXT("[PlayGM] Player left. Current Players: %d"), CurrentPlayers);
 
@@ -87,25 +84,17 @@ void APlayGameMode::Logout(AController* Exiting)
 }
 void APlayGameMode::CheckEmptyAndMaybeShutdown()
 {
-    int32 CurrentPlayers = GetNumPlayers();
-
-    if (CurrentPlayers <= 0)
-    {
-        EmptyCount++;
-
-        if (EmptyCount >= 3) // 3초 동안 아무도 없으면 종료
-        {
-            UE_LOG(LogTemp, Warning, TEXT("[PlayGM] Empty for 3 checks. Shutting down."));
-            ShutdownServer();
-        }
-    }
-    else
-    {
-        EmptyCount = 0; // 다시 누군가 있으면 카운트 리셋
-    }
+   
 }
 void APlayGameMode::ShutdownServer()
 {
-    UE_LOG(LogTemp, Error, TEXT("[PlayGM] >>> PLAY SERVER SHUTDOWN <<<"));
-    FGenericPlatformMisc::RequestExit(false);  // 정상 종료
+  
+
+    int32 CurrentPlayers = GetNumPlayers();
+    UE_LOG(LogTemp, Warning, TEXT("[PlayGM] Player count : %d"),CurrentPlayers);
+    if (CurrentPlayers <= 0)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[PlayGM] >>> PLAY SERVER SHUTDOWN <<<"));
+        FGenericPlatformMisc::RequestExitWithStatus(false, 0);
+    }
 }
