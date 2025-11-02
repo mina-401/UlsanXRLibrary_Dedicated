@@ -21,6 +21,20 @@ void APlayGameMode::BeginPlay()
         StartPlaySession();
     }
 
+    if (IsRunningDedicatedServer())
+    {
+        // 정기적으로 플레이어 수 체크 시작
+        GetWorld()->GetTimerManager().SetTimer(
+            EmptyCheckTimerHandle,
+            this,
+            &APlayGameMode::ShutdownServer,
+            EmptyCheckInterval,
+            true,
+            20.0f
+        );
+
+        UE_LOG(LogTemp, Log, TEXT("[PlayGM] Started empty-check timer (interval=%.2f)"), EmptyCheckInterval);
+    }
 }
 
 void APlayGameMode::StartPlaySession()
