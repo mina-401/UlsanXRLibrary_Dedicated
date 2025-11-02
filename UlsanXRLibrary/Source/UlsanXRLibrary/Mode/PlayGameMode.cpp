@@ -35,7 +35,7 @@ void APlayGameMode::StartPlaySession()
     if (!World) { UE_LOG(LogTemp, Warning, TEXT("[PlayGM] World is null")); return; }
 
     UBaseGameInstance* GI = Cast<UBaseGameInstance>(World->GetGameInstance());
-    if (!GI) { UE_LOG(LogTemp, Warning, TEXT("[LobbyGM] GameInstance is not UBaseGameInstance")); return; }
+    if (!GI) { UE_LOG(LogTemp, Warning, TEXT("[PlayGM] GameInstance is not UBaseGameInstance")); return; }
 
     // 기존 세션 존재 여부 확인
     IOnlineSubsystem* OSS = IOnlineSubsystem::Get();
