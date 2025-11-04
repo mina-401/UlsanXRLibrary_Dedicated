@@ -147,7 +147,7 @@ void UTitleUserWidget::StartServer()
 
 	if (GameInstance == nullptr) return;
 
-	GameInstance->StartServer(IP, Port);
+	//GameInstance->StartServer(IP, Port);
 
 	int a = 0;
 }
@@ -163,7 +163,7 @@ void UTitleUserWidget::Connect()
 
 
 
-	GameInstance->Connect(IP, Port);
+	//GameInstance->Connect(IP, Port);
 }
 
 

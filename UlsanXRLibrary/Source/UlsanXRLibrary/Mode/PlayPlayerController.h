@@ -20,8 +20,6 @@ public:
 	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
 	void ReturnTravel();
 
-	UFUNCTION(/*Server, Reliable,*/BlueprintCallable)
-	void JoinLobby();
 
 	UFUNCTION(BlueprintCallable)
 	void OnClickHostLobby();

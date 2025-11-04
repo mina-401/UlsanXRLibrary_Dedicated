@@ -10,18 +10,6 @@
 #include "LobbyGameMode.h"
 
 
-
-//void APlayPlayerController::Server_RequestStartBookTravel_Implementation()
-//{
-//
-//	UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance());
-//
-//	if (BaseGI)
-//	{
-//		BaseGI->StartBookTravel(this);
-//	}
-//}
-
 void APlayPlayerController::ReturnTravel()
 {
 	UBaseGameInstance* BaseGI = Cast<UBaseGameInstance>(GetGameInstance());
@@ -33,29 +21,14 @@ void APlayPlayerController::ReturnTravel()
 }
 
 
-
-
-void APlayPlayerController::JoinLobby()
-{
-    //IOnlineSubsystem* OSS = IOnlineSubsystem::Get();
-    //if (!OSS) return;
-
-    //SessionInterface = OSS->GetSessionInterface();
-    //if (!SessionInterface.IsValid()) return;
-
-    //SearchSettings = MakeShared<FOnlineSessionSearch>();
-    //SearchSettings->bIsLanQuery = true;
-    //SearchSettings->MaxSearchResults = 20;
-
-    //SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &APlayPlayerController::OnFindSessionsComplete);
-    //SessionInterface->FindSessions(0, SearchSettings.ToSharedRef());
-}
 void APlayPlayerController::OnClickHostLobby()
 {
     UBaseGameInstance* GI = Cast<UBaseGameInstance>(GetGameInstance());
     if (GI)
     {
         GI->HostLobby(TEXT("Lobby"));
+
+        UE_LOG(LogTemp, Log, TEXT("Hosting Voice-Enabled Lobby..."));
     }
 }
 
@@ -65,5 +38,6 @@ void APlayPlayerController::OnClickJoinLobby()
     if (GI)
     {
         GI->JoinLobby(TEXT("Lobby"));
+        UE_LOG(LogTemp, Log, TEXT("Searching for Voice-Enabled Lobby..."));
     }
 }

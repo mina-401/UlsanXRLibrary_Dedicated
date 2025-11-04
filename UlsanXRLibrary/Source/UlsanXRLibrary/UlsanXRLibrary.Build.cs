@@ -19,7 +19,7 @@ public class UlsanXRLibrary : ModuleRules
             "Core", "CoreUObject", "Engine",
             "InputCore", "EnhancedInput",
             "UMG",
-            "Sockets", "Networking","OnlineSubsystem","OnlineSubsystemNull","OnlineSubsystemUtils","Voice"
+            "Sockets", "Networking","OnlineSubsystem","OnlineSubsystemEOS","OnlineSubsystemUtils","VoiceChat",
         });
 
 
