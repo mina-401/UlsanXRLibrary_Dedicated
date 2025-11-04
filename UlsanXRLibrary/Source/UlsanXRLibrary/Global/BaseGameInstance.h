@@ -25,10 +25,22 @@ public:
 
 public:
 	UBaseGameInstance();
+	virtual void Init() override;
 
 	// ==================== EOS Connect 로그인 (Device ID) ====================
 
+	UFUNCTION(BlueprintCallable, Category = "Online")
+	void AutoLoginWithEOSConnect();
 
+	void OnEOSConnectLoginComplete(
+		int32 LocalUserNum,
+		bool bWasSuccessful,
+		const FUniqueNetId& UserId,
+		const FString& Error
+	);
+
+	void OnLoginSuccess();
+	void OnLoginFailed(const FString& ErrorMessage);
 
 	// 블루프린트 이벤트
 	UPROPERTY(BlueprintAssignable, Category = "Online")
@@ -107,6 +119,4 @@ private:
 	class UDataTable* LevelDataTable = nullptr;
 	class UDataTable* BookItemDataTable = nullptr;
 	class UDataTable* ActorDataTable = nullptr;
-
-
 };

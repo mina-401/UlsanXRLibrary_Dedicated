@@ -24,6 +24,9 @@ public:
 
 public:
     virtual void BeginPlay() override;
+    virtual void PostLogin(APlayerController* NewPlayer) override;
+    virtual void Logout(AController* Exiting) override;
+
 protected:
     // Voice 세션 ID (클라이언트에게 전달용)
     UPROPERTY()
@@ -33,6 +36,9 @@ private:
     // Online Interfaces
     IOnlineSessionPtr SessionInterface;
 
-public:
+    // 세션이 Voice 활성화되어 있는지 확인
+    bool IsVoiceEnabledSession() const;
 
+    // 클라이언트에게 Voice 세션 정보 전달
+    void NotifyClientVoiceSession(APlayerController* PC);
 };
